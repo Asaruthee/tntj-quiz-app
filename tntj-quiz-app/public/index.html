@@ -1,0 +1,1257 @@
+<!doctype html>
+<html lang="ta" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tamil Quiz Championship</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=Noto+Sans+Tamil:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    .font-inter { font-family: 'Inter', sans-serif; }
+    .font-tamil { font-family: 'Noto Sans Tamil', sans-serif; }
+    
+    /* Modern Glass Cards */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .glass-card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+    }
+    
+    .glass-card-white {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
+    }
+    
+    .glass-card-white:hover {
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.25);
+      transform: translateY(-2px);
+    }
+    
+    /* Modern Buttons */
+    .modern-btn {
+      background: white;
+      color: black;
+      border: 2px solid white;
+      font-weight: 700;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .modern-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0,0,0,0.1), transparent);
+      transition: left 0.5s;
+    }
+    
+    .modern-btn:hover::before {
+      left: 100%;
+    }
+    
+    .modern-btn:hover:not(:disabled) {
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.3);
+    }
+    
+    .modern-btn:active:not(:disabled) {
+      transform: scale(0.98);
+    }
+    
+    .modern-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    
+    .modern-btn-inverse {
+      background: black;
+      color: white;
+      border: 2px solid black;
+      font-weight: 700;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .modern-btn-inverse:hover:not(:disabled) {
+      background: #1a1a1a;
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+    
+    .question-btn {
+      background: rgba(255, 255, 255, 0.95);
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      color: black;
+      font-weight: 900;
+    }
+    
+    .question-btn:hover:not(:disabled) {
+      transform: scale(1.1) rotate(5deg);
+      background: white;
+      border-color: black;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      color: black;
+    }
+    
+    .question-btn:disabled {
+      background: rgba(100, 100, 100, 0.5) !important;
+      color: rgba(255, 255, 255, 0.7) !important;
+      text-decoration: line-through;
+      border-color: transparent !important;
+    }
+    
+    /* Animated Background */
+    .animated-bg {
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 25%, #000000 50%, #1a1a1a 75%, #000000 100%);
+      background-size: 400% 400%;
+      animation: gradientFlow 15s ease infinite;
+    }
+    
+    @keyframes gradientFlow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    /* Floating Animation */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    /* Glow Text */
+    .glow-text {
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 255, 255, 0.3);
+      animation: glow 2s ease-in-out infinite;
+    }
+    
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 255, 255, 0.3); }
+      50% { text-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 255, 255, 0.5); }
+    }
+    
+    /* Page Transitions */
+    .page { 
+      display: none;
+      opacity: 0;
+      transform: scale(0.95);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .page.active { 
+      display: block;
+      animation: pageEnter 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+    
+    @keyframes pageEnter {
+      from { 
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+      }
+      to { 
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+    
+    /* Counter Animation */
+    @keyframes counterPop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    
+    .counter-animate {
+      animation: counterPop 0.5s ease;
+    }
+    
+    /* Row Slide In */
+    @keyframes rowSlide {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    .rank-row {
+      animation: rowSlide 0.5s ease forwards;
+      opacity: 0;
+    }
+    
+    /* Toast Animations */
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      animation: toastSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes toastSlideIn {
+      from { 
+        transform: translateX(400px) rotate(10deg);
+        opacity: 0;
+      }
+      to { 
+        transform: translateX(0) rotate(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes toastSlideOut {
+      from { 
+        transform: translateX(0) rotate(0);
+        opacity: 1;
+      }
+      to { 
+        transform: translateX(400px) rotate(-10deg);
+        opacity: 0;
+      }
+    }
+    
+    /* Admin Button Spin */
+    .admin-btn {
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .admin-btn:hover {
+      transform: rotate(360deg) scale(1.1);
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.4);
+    }
+    
+    /* Input Focus Effects */
+    input, textarea, select {
+      background: white;
+      color: black;
+      border: 2px solid rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+    
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border: 2px solid black;
+      box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1);
+      transform: scale(1.02);
+      background: white;
+      color: black;
+    }
+    
+    input::placeholder, textarea::placeholder {
+      color: rgba(0, 0, 0, 0.4);
+      font-weight: 500;
+    }
+    
+    /* Stats Card Pulse */
+    @keyframes statsPulse {
+      0%, 100% { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15); }
+      50% { box-shadow: 0 12px 48px rgba(0, 0, 0, 0.25); }
+    }
+    
+    .stats-card {
+      animation: statsPulse 3s ease-in-out infinite;
+    }
+    
+    /* Round Selection Cards */
+    .round-card {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .round-card:hover {
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 20px 60px rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Trophy Bounce */
+    @keyframes trophyBounce {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-5px) rotate(-5deg); }
+      75% { transform: translateY(-5px) rotate(5deg); }
+    }
+    
+    
+  </style>
+  <style>@view-transition { navigation: auto; }
+  .quiz-title{
+  letter-spacing: 2px;      /* perfect Tamil spacing */
+  word-spacing: 8px;       /* space only between words */
+  line-height: 1.5;
+  text-shadow:
+    0 0 18px rgba(255,255,255,0.6),
+    0 0 36px rgba(255,255,255,0.4),
+    0 0 60px rgba(255,255,255,0.25);
+}
+.subtitle-space{
+  letter-spacing: 0.32em;
+  word-spacing: 0.6em;
+  text-transform: uppercase;
+  margin-top: 50px;   /* ⬅⬅ subtitle goes down */
+  display: block;
+}
+
+
+</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-black text-white font-inter overflow-auto">
+  <div class="min-h-full relative animated-bg">
+   <div class="relative z-10 p-4 md:p-8 min-h-full"><!-- Page 1: Team Setup -->
+    <div id="page-team-setup" class="page active max-w-6xl mx-auto">
+     <div class="text-center mb-8 float-animation">
+      <h1 id="main-title" class="quiz-title text-4xl md:text-6xl font-black mb-2 glow-text">
+  பள்ளிப்படை பூதகேணி கிளை
+</h1>
+
+
+      <p id="subtitle" class="subtitle-space text-xl font-semibold text-gray-300">
+  Ramadan Quiz Program - 2026
+</p>
+     </div>
+     <div class="glass-card-white rounded-2xl p-6 md:p-8 mb-8">
+      <h2 class="text-2xl md:text-3xl font-black mb-6 text-center text-black">அணி அமைப்பு / TEAM SETUP</h2>
+      <div id="team-inputs-container" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8"><!-- Team inputs will be generated here -->
+      </div>
+      <div class="flex justify-center"><button onclick="saveTeams()" class="modern-btn px-8 py-4 rounded-xl text-xl uppercase tracking-wide"> ✓ அணிகளைச் சேமி / Save Teams </button>
+      </div>
+     </div>
+    </div><!-- Page 2: Scoreboard -->
+    <div id="page-scoreboard" class="page max-w-7xl mx-auto">
+     <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+      <div>
+       <h1 id="scoreboard-title" class="text-3xl md:text-5xl font-black glow-text">Ramadan Quiz Program - 2026</h1>
+       <p class="text-lg font-bold mt-1 text-gray-300">SCOREBOARD</p>
+      </div>
+      <div class="flex items-center gap-4">
+       <div id="day-badge" class="glass-card px-6 py-3 rounded-xl font-black text-xl">
+        DAY 1
+       </div>
+      </div>
+     </div><!-- Stats Cards -->
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+      <div class="glass-card-white rounded-2xl p-6 text-center stats-card">
+       <div class="text-sm font-bold mb-2 text-gray-600 trophy-bounce inline-block">
+        இன்றைய அதிகபட்சம்
+       </div>
+       <div id="highest-today-score" class="text-4xl font-black text-black">
+        0
+       </div>
+       <div id="highest-today-team" class="text-lg font-bold text-gray-700">
+        -
+       </div>
+      </div>
+      <div class="glass-card rounded-2xl p-6 text-center stats-card border-2 border-white">
+       <div class="text-sm font-bold mb-2 inline-block">
+        OVERALL TOP TEAM
+       </div>
+       <div id="overall-leader-score" class="text-4xl font-black counter-animate">
+        0
+       </div>
+       <div id="overall-leader-team" class="text-lg font-bold text-gray-300">
+        -
+       </div>
+      </div>
+      <div class="glass-card-white rounded-2xl p-6 text-center stats-card">
+       <div class="text-sm font-bold mb-2 text-gray-600">
+        📅 COMPETITION DAY
+       </div>
+       <div id="competition-day" class="text-4xl font-black counter-animate text-black">
+        1
+       </div>
+       <div class="text-lg font-bold text-gray-700">
+        Current Day
+       </div>
+      </div>
+     </div><!-- Ranking Table -->
+     <div class="glass-card-white rounded-2xl overflow-hidden mb-8">
+      <div class="overflow-x-auto">
+       <table class="w-full">
+        <thead>
+         <tr class="bg-black text-white">
+          <th class="px-6 py-4 text-left text-sm font-black uppercase">Rank</th>
+          <th class="px-6 py-4 text-left text-sm font-black uppercase">அணி பெயர் / Team</th>
+          <th class="px-6 py-4 text-center text-sm font-black uppercase">இன்று / Today</th>
+          <th class="px-6 py-4 text-center text-sm font-black uppercase">மொத்தம் / Total</th>
+         </tr>
+        </thead>
+        <tbody id="scoreboard-table"><!-- Table rows will be generated here -->
+        </tbody>
+       </table>
+      </div>
+     </div>
+     <div class="flex justify-center gap-4"><button onclick="showPage('page-team-setup')" class="modern-btn px-6 py-3 rounded-xl uppercase"> ← Back to Setup </button> <button onclick="showPage('page-round-selection')" class="modern-btn-inverse px-8 py-4 rounded-xl text-xl uppercase"> ▶ சுற்று தொடங்கு / Start Round </button>
+     </div>
+    </div><!-- Page 3: Round Selection -->
+    <div id="page-round-selection" class="page max-w-5xl mx-auto">
+     <div class="text-center mb-8 float-animation">
+      <h1 class="text-3xl md:text-5xl font-black mb-2 glow-text">சுற்று தேர்வு</h1>
+      <p class="text-xl font-bold text-gray-300">SELECT POINT CATEGORY</p>
+      <p id="current-team-display" class="text-2xl font-black mt-4">Current Team: -</p>
+     </div>
+     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8"><button onclick="selectRound(5)" class="glass-card-white rounded-2xl p-6 md:p-8 text-center round-card">
+       <div class="text-5xl md:text-7xl font-black mb-2 text-black">
+        5
+       </div>
+       <div class="text-lg font-bold text-gray-700">
+        POINTS
+       </div>
+       <div class="mt-4 px-4 py-2 bg-black text-white rounded-xl text-sm font-bold">
+        நேரடி / DIRECT
+       </div></button> <button onclick="selectRound(10)" class="glass-card-white rounded-2xl p-6 md:p-8 text-center round-card">
+       <div class="text-5xl md:text-7xl font-black mb-2 text-black">
+        10
+       </div>
+       <div class="text-lg font-bold text-gray-700">
+        POINTS
+       </div>
+       <div class="mt-4 px-4 py-2 bg-black text-white rounded-xl text-sm font-bold">
+        நேரடி / DIRECT
+       </div></button> <button onclick="selectRound(20)" class="glass-card-white rounded-2xl p-6 md:p-8 text-center round-card">
+       <div class="text-5xl md:text-7xl font-black mb-2 text-black">
+        20
+       </div>
+       <div class="text-lg font-bold text-gray-700">
+        POINTS
+       </div>
+       <div class="mt-4 px-4 py-2 bg-black text-white rounded-xl text-sm font-bold">
+        MCQ / பல தேர்வு
+       </div></button> <button onclick="selectRound(30)" class="glass-card-white rounded-2xl p-6 md:p-8 text-center round-card">
+       <div class="text-5xl md:text-7xl font-black mb-2 text-black">
+        30
+       </div>
+       <div class="text-lg font-bold text-gray-700">
+        POINTS
+       </div>
+       <div class="mt-4 px-4 py-2 bg-black text-white rounded-xl text-sm font-bold">
+        MCQ / பல தேர்வு
+       </div></button>
+     </div>
+     <div class="text-center"><button onclick="showPage('page-scoreboard')" class="modern-btn px-6 py-3 rounded-xl uppercase"> ← Back to Scoreboard </button>
+     </div>
+    </div><!-- Page 4: Question Grid -->
+    <div id="page-question-grid" class="page max-w-4xl mx-auto">
+     <div class="text-center mb-8">
+      <div id="round-badge" class="inline-block glass-card px-6 py-2 rounded-xl text-lg font-black mb-4">
+       10 POINTS ROUND
+      </div>
+      <h1 class="text-3xl md:text-4xl font-black mb-2 glow-text">வினா தேர்வு</h1>
+      <p class="font-bold text-gray-300">SELECT QUESTION NUMBER</p>
+      <p id="grid-team-display" class="text-xl font-black mt-2">Current Team: -</p>
+     </div>
+     <div class="glass-card-white rounded-2xl p-6 md:p-10 mb-8">
+      <div id="question-grid" class="grid grid-cols-3 md:grid-cols-5 gap-4"><!-- Question buttons will be generated here -->
+      </div>
+     </div>
+     <div class="text-center"><button onclick="showPage('page-round-selection')" class="modern-btn px-6 py-3 rounded-xl uppercase"> ← Back to Rounds </button>
+     </div>
+    </div><!-- Page 5: Question Display -->
+    <div id="page-question" class="page max-w-4xl mx-auto">
+     <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+      <div><span id="question-badge" class="inline-block glass-card px-4 py-1 rounded-xl text-sm font-bold mb-2">QUESTION 1</span>
+       <h2 id="question-team-display" class="text-2xl font-black">Team - Points</h2>
+      </div><!-- Timer -->
+      <div class="relative">
+       <svg class="w-32 h-32 transform -rotate-90" viewbox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="white" stroke="rgba(255,255,255,0.3)" stroke-width="4" /> <circle id="timer-circle" cx="50" cy="50" r="45" fill="none" stroke="black" stroke-width="8" class="timer-ring" stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="0" style="transition: stroke-dashoffset 1s linear;" />
+       </svg>
+       <div class="absolute inset-0 flex items-center justify-center"><span id="timer-display" class="text-4xl font-black text-black">60</span>
+       </div>
+      </div>
+     </div>
+     <div class="glass-card-white rounded-2xl p-6 md:p-10 mb-8">
+      <p id="question-text" class="font-tamil text-2xl md:text-4xl leading-relaxed text-center mb-8 font-bold text-black">Question text will appear here</p><!-- MCQ Options -->
+      <div id="mcq-options" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8" style="display: none;"><!-- Options will be generated here -->
+      </div>
+     </div>
+     <div class="flex flex-wrap justify-center gap-4"><button onclick="readQuestion()" class="modern-btn px-6 py-3 rounded-xl font-bold uppercase"> 🔊 Read Question </button> <button onclick="startTimer()" id="start-timer-btn" class="modern-btn-inverse px-6 py-3 rounded-xl font-bold uppercase"> ⏱ Start Timer </button> <button onclick="showAnswer()" class="modern-btn px-8 py-3 rounded-xl font-bold uppercase"> 👁 Show Answer </button>
+     </div>
+    </div><!-- Page 6: Answer Display -->
+    <div id="page-answer" class="page max-w-4xl mx-auto">
+     <div class="text-center mb-8"><span class="inline-block glass-card px-4 py-2 rounded-xl text-lg font-bold mb-4"> ✓ விடை / ANSWER </span>
+      <h2 id="answer-team-display" class="text-2xl font-black">Team - Question</h2>
+     </div>
+     <div class="glass-card rounded-2xl p-8 md:p-12 text-center mb-6 border-2 border-white">
+      <p id="answer-text" class="font-tamil text-3xl md:text-5xl font-black leading-relaxed">Answer will appear here</p>
+     </div>
+     <div id="reference-section" class="glass-card-white rounded-2xl p-6 mb-8">
+      <h3 class="text-lg font-black mb-2 text-black">ஆதாரம்:</h3>
+      <p id="reference-text" class="font-tamil text-lg text-gray-700">Reference information will appear here.</p>
+     </div>
+     <div class="flex flex-wrap justify-center gap-4"><button onclick="markCorrect()" class="modern-btn px-8 py-4 rounded-xl text-xl font-black uppercase"> <span id="correct-btn-text">✓ Correct +10</span> </button> <button onclick="markWrong()" class="modern-btn px-8 py-4 rounded-xl text-xl font-black uppercase"> ✗ Wrong 0 </button> <button onclick="nextTeam()" class="modern-btn-inverse px-8 py-4 rounded-xl text-xl font-black uppercase"> → Next Team </button>
+     </div>
+    </div>
+   </div><!-- Floating Admin Button --> <button onclick="toggleAdminPanel()" class="admin-btn fixed bottom-6 right-6 w-14 h-14 bg-white text-black rounded-full glass-card-white flex items-center justify-center z-50"> <span class="text-2xl">⚙</span> </button> <!-- Admin Panel Modal -->
+   <div id="admin-panel" class="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 hidden items-center justify-center p-4 overflow-auto">
+    <div class="glass-card-white rounded-2xl max-w-4xl w-full max-h-[90%] overflow-y-auto">
+     <div class="p-6 md:p-8">
+      <div class="flex justify-between items-center mb-8">
+       <h2 class="text-2xl md:text-3xl font-black uppercase text-black">⚙ Admin Panel</h2><button onclick="toggleAdminPanel()" class="w-10 h-10 rounded-full bg-black text-white hover:bg-gray-800 flex items-center justify-center transition-colors font-black text-2xl"> ✕ </button>
+      </div><!-- Admin Actions -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"><button onclick="editTeamNames()" class="glass-card-white rounded-xl p-4 text-center hover:scale-105 transition-transform border border-gray-200">
+        <div class="text-3xl mb-2">
+         ✏️
+        </div><span class="text-sm font-bold text-black">Edit Teams</span> </button> <button onclick="dailyReset()" class="glass-card-white rounded-xl p-4 text-center hover:scale-105 transition-transform border border-gray-200">
+        <div class="text-3xl mb-2">
+         🔄
+        </div><span class="text-sm font-bold text-black">Daily Reset</span> </button> <button onclick="fullReset()" class="glass-card-white rounded-xl p-4 text-center hover:scale-105 transition-transform border border-gray-200">
+        <div class="text-3xl mb-2">
+         🗑️
+        </div><span class="text-sm font-bold text-black">Full Reset</span> </button> <button onclick="exportCSV()" class="glass-card-white rounded-xl p-4 text-center hover:scale-105 transition-transform border border-gray-200">
+        <div class="text-3xl mb-2">
+         📊
+        </div><span class="text-sm font-bold text-black">Export CSV</span> </button>
+      </div><!-- Add Question Form -->
+      <div class="glass-card-white rounded-xl p-6 bg-gray-50 border border-gray-200">
+       <h3 class="text-xl font-black mb-6 uppercase text-black">➕ Add New Question</h3>
+       <form id="add-question-form" onsubmit="addQuestion(event)">
+        <div class="space-y-4">
+         <div><label for="tamil-question" class="block text-sm font-bold mb-2 text-black">தமிழ் கேள்வி / TAMIL QUESTION</label> <textarea id="tamil-question" rows="3" placeholder="Enter question in Tamil..." class="w-full px-4 py-3 font-tamil text-lg rounded-xl" required></textarea>
+         </div>
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div><label for="option-a" class="block text-sm font-bold mb-2 text-black">OPTION A</label> <input id="option-a" type="text" placeholder="Option A" class="w-full px-4 py-3 font-tamil rounded-xl">
+          </div>
+          <div><label for="option-b" class="block text-sm font-bold mb-2 text-black">OPTION B</label> <input id="option-b" type="text" placeholder="Option B" class="w-full px-4 py-3 font-tamil rounded-xl">
+          </div>
+          <div><label for="option-c" class="block text-sm font-bold mb-2 text-black">OPTION C</label> <input id="option-c" type="text" placeholder="Option C" class="w-full px-4 py-3 font-tamil rounded-xl">
+          </div>
+          <div><label for="option-d" class="block text-sm font-bold mb-2 text-black">OPTION D</label> <input id="option-d" type="text" placeholder="Option D" class="w-full px-4 py-3 font-tamil rounded-xl">
+          </div>
+         </div>
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div><label for="correct-answer" class="block text-sm font-bold mb-2 text-black">CORRECT ANSWER</label> <input id="correct-answer" type="text" placeholder="Enter correct answer" class="w-full px-4 py-3 font-tamil rounded-xl" required>
+          </div>
+          <div><label for="points" class="block text-sm font-bold mb-2 text-black">POINTS (ROUND)</label> <select id="points" class="w-full px-4 py-3 rounded-xl font-bold" required> <option value="5">5 Points</option> <option value="10">10 Points</option> <option value="20">20 Points</option> <option value="30">30 Points</option> </select>
+          </div>
+         </div>
+         <div><label for="question-number" class="block text-sm font-bold mb-2 text-black">QUESTION NUMBER (1-15)</label> <select id="question-number" class="w-full px-4 py-3 rounded-xl font-bold" required> <option value="1">Question 1</option> <option value="2">Question 2</option> <option value="3">Question 3</option> <option value="4">Question 4</option> <option value="5">Question 5</option> <option value="6">Question 6</option> <option value="7">Question 7</option> <option value="8">Question 8</option> <option value="9">Question 9</option> <option value="10">Question 10</option> <option value="11">Question 11</option> <option value="12">Question 12</option> <option value="13">Question 13</option> <option value="14">Question 14</option> <option value="15">Question 15</option> </select>
+         </div>
+         <div><label for="reference" class="block text-sm font-bold mb-2 text-black">REFERENCE / குறிப்பு</label> <textarea id="reference" rows="2" placeholder="Enter reference..." class="w-full px-4 py-3 font-tamil rounded-xl"></textarea>
+         </div><button type="submit" class="modern-btn-inverse w-full py-4 rounded-xl text-lg font-black uppercase"> ➕ Add Question </button>
+        </div>
+       </form>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      main_title: 'தமிழ் வினாடி வினா',
+      subtitle: 'Tamil Quiz Championship - Season 2025'
+    };
+    
+    let config = { ...defaultConfig };
+    
+    // Application State with nested question structure
+    let appState = {
+      teams: [],
+      currentDay: 1,
+      currentTeamIndex: 0,
+      currentRound: null,
+      currentQuestionNumber: null,
+      currentQuestion: null,
+      usedQuestions: {},
+      timerInterval: null,
+      timeRemaining: 60,
+      tickAudio: null,
+      questions: {
+        "5": {},
+        "10": {},
+        "20": {},
+        "30": {}
+      }
+    };
+    
+    // Create tick sound using Web Audio API
+    function createTickSound() {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      
+      return function playTick() {
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.value = 800;
+        oscillator.type = 'square';
+        
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.05);
+      };
+    }
+    
+    // Initialize Application
+    function initApp() {
+  loadFromStorage();
+  generateTeamInputs();
+  updateScoreboard();
+  appState.tickAudio = createTickSound();
+
+  if (hasTeamsSaved()) {
+    showPage("page-scoreboard");   // 👈 skip team setup
+  } else {
+    showPage("page-team-setup");   // 👈 only first time
+  }
+}
+
+    
+    // Generate team inputs
+    function generateTeamInputs() {
+  const container = document.getElementById('team-inputs-container');
+  container.innerHTML = '';
+
+  for (let i = 1; i <= 10; i++) {
+    const value = appState.teams[i-1]?.name || '';
+    const div = document.createElement('div');
+
+    div.innerHTML = `
+      <label class="block text-sm font-bold mb-2 text-black">அணி ${i} / TEAM ${i}</label>
+      <input id="team-${i}" class="w-full px-4 py-3 rounded-xl" value="${value}" />
+    `;
+    container.appendChild(div);
+  }
+}
+
+    
+    // Save teams
+    function saveTeams() {
+  appState.teams = [];
+
+  for (let i = 1; i <= 10; i++) {
+    const input = document.getElementById(`team-${i}`);
+    if (!input) continue;
+
+    const teamName = input.value.trim();
+    if (teamName !== "") {
+      appState.teams.push({
+        id: i,
+        name: teamName,
+        todayScore: 0,
+        totalScore: 0,
+        daysPlayed: appState.currentDay
+      });
+    }
+  }
+
+  if (appState.teams.length === 0) {
+    showToast('Please enter at least one team name', 'error');
+    return;
+  }
+
+  saveToStorage();
+  updateScoreboard();
+  showToast('Teams saved successfully!', 'success');
+  showPage('page-scoreboard');
+}
+
+function hasTeamsSaved() {
+  return Array.isArray(appState.teams) && appState.teams.length > 0;
+}
+
+    
+    // Update scoreboard
+    function updateScoreboard() {
+      const tbody = document.getElementById('scoreboard-table');
+      tbody.innerHTML = '';
+      
+      // Sort teams by total score
+      const sortedTeams = [...appState.teams].sort((a, b) => b.totalScore - a.totalScore);
+      
+      sortedTeams.forEach((team, index) => {
+        const rank = index + 1;
+        let rankDisplay = rank;
+        let rowClass = 'border-t-2 border-gray-100 hover:bg-gray-50 text-black';
+        
+        if (rank === 1) {
+          rankDisplay = '🥇';
+          rowClass = 'border-t-2 border-gray-100 bg-gray-50 font-black text-black';
+        } else if (rank === 2) {
+          rankDisplay = '🥈';
+          rowClass = 'border-t-2 border-gray-100 bg-white text-black';
+        } else if (rank === 3) {
+          rankDisplay = '🥉';
+          rowClass = 'border-t-2 border-gray-100 bg-white text-black';
+        }
+        
+        const row = document.createElement('tr');
+        row.className = rowClass + ' rank-row';
+        row.style.animationDelay = `${index * 0.1}s`;
+        row.innerHTML = `
+          <td class="px-6 py-4 ${rank <= 3 ? 'text-2xl' : 'font-bold'}">${rankDisplay}</td>
+          <td class="px-6 py-4 font-tamil text-lg font-bold">${team.name}</td>
+          <td class="px-6 py-4 text-center text-xl font-black">${team.todayScore > 0 ? '+' : ''}${team.todayScore}</td>
+          <td class="px-6 py-4 text-center text-xl font-black">${team.totalScore}</td>
+        `;
+        tbody.appendChild(row);
+      });
+      
+      // Update stats cards
+      const highestToday = sortedTeams.reduce((max, team) => team.todayScore > max.todayScore ? team : max, sortedTeams[0] || {todayScore: 0, name: '-'});
+      document.getElementById('highest-today-score').textContent = highestToday.todayScore || 0;
+      document.getElementById('highest-today-team').textContent = highestToday.name || '-';
+      
+      const overallLeader = sortedTeams[0] || {totalScore: 0, name: '-'};
+      document.getElementById('overall-leader-score').textContent = overallLeader.totalScore || 0;
+      document.getElementById('overall-leader-team').textContent = overallLeader.name || '-';
+      
+      document.getElementById('competition-day').textContent = appState.currentDay;
+      document.getElementById('day-badge').textContent = `DAY ${appState.currentDay}`;
+    }
+    
+    // Select round
+    function selectRound(points) {
+  appState.currentRound = points;
+
+  if (!appState.usedQuestions[points]) {
+    appState.usedQuestions[points] = [];
+  }
+
+  updateCurrentTeamDisplay();
+  generateQuestionGrid();
+  showPage('page-question-grid');
+}
+
+    
+    // Update current team display
+    function updateCurrentTeamDisplay() {
+      const currentTeam = appState.teams[appState.currentTeamIndex];
+      const teamName = currentTeam ? currentTeam.name : 'No team';
+      
+      const displays = [
+        document.getElementById('current-team-display'),
+        document.getElementById('grid-team-display')
+      ];
+      
+      displays.forEach(el => {
+        if (el) el.textContent = `Current Team: ${teamName}`;
+      });
+    }
+    
+    // Generate question grid
+    function generateQuestionGrid() {
+  const grid = document.getElementById("question-grid");
+  grid.innerHTML = '';
+
+  const badge = document.getElementById('round-badge');
+  badge.textContent = `${appState.currentRound} POINTS ROUND`;
+
+  if (!appState.usedQuestions[appState.currentRound]) {
+    appState.usedQuestions[appState.currentRound] = [];
+  }
+
+  for (let i = 1; i <= 15; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'question-btn aspect-square rounded-xl text-3xl md:text-4xl font-black flex items-center justify-center';
+    btn.textContent = i;
+
+    const isUsed = appState.usedQuestions[appState.currentRound].includes(i);
+    if (isUsed) btn.disabled = true;
+    else btn.onclick = () => selectQuestion(i);
+
+    grid.appendChild(btn);
+  }
+}
+
+    
+    // Select question - goes back to scoreboard if no question exists
+    async function selectQuestion(num) {
+  const res = await fetch(`/api/question/${appState.currentRound}/${num}`);
+  const q = await res.json();
+
+  if (!q) {
+    alert("This question is not added yet!");
+    return showPage("page-scoreboard");
+  }
+
+  appState.currentQuestion = q;
+  appState.currentQuestionNumber = num;
+  displayQuestion();
+  showPage("page-question");
+}
+
+    
+    // Display question
+    function displayQuestion() {
+      const currentTeam = appState.teams[appState.currentTeamIndex];
+      
+      document.getElementById('question-badge').textContent = `QUESTION ${appState.currentQuestionNumber}`;
+      document.getElementById('question-team-display').textContent = `${currentTeam.name} - ${appState.currentRound} Points`;
+      document.getElementById('question-text').textContent = appState.currentQuestion.text;
+      
+      // Show/hide MCQ options
+      const mcqContainer = document.getElementById('mcq-options');
+      if (appState.currentRound >= 20 && appState.currentQuestion.options && appState.currentQuestion.options.length > 0) {
+        mcqContainer.style.display = 'grid';
+        mcqContainer.innerHTML = '';
+        
+        const labels = ['A', 'B', 'C', 'D'];
+        appState.currentQuestion.options.forEach((option, index) => {
+          const btn = document.createElement('div');
+          btn.className = 'glass-card-white rounded-xl p-4 text-left flex items-center gap-4 border border-gray-200';
+          btn.innerHTML = `
+            <span class="w-10 h-10 rounded-xl bg-black text-white flex items-center justify-center font-black flex-shrink-0">${labels[index]}</span>
+            <span class="font-tamil text-xl font-bold text-black">${option}</span>
+          `;
+          mcqContainer.appendChild(btn);
+        });
+      } else {
+        mcqContainer.style.display = 'none';
+      }
+      
+      // Reset timer
+      resetTimer();
+    }
+    
+    // Timer functions
+    function resetTimer() {
+      if (appState.timerInterval) {
+        clearInterval(appState.timerInterval);
+      }
+      appState.timeRemaining = 60;
+      updateTimerDisplay();
+      document.getElementById('start-timer-btn').disabled = false;
+    }
+    
+    function startTimer() {
+      if (appState.timerInterval) return;
+      
+      document.getElementById('start-timer-btn').disabled = true;
+      
+      appState.timerInterval = setInterval(() => {
+        // Play tick sound
+        if (appState.tickAudio) {
+          appState.tickAudio();
+        }
+        
+        appState.timeRemaining--;
+        updateTimerDisplay();
+        
+        if (appState.timeRemaining <= 0) {
+          clearInterval(appState.timerInterval);
+          appState.timerInterval = null;
+          showToast('Time is up!', 'error');
+        }
+      }, 1000);
+    }
+    
+    function updateTimerDisplay() {
+      document.getElementById('timer-display').textContent = appState.timeRemaining;
+      
+      const circle = document.getElementById('timer-circle');
+      const circumference = 283;
+      const offset = circumference - (appState.timeRemaining / 60) * circumference;
+      circle.style.strokeDashoffset = offset;
+    }
+    
+    // Read question using Web Speech API
+    function readQuestion() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        
+        const utterance = new SpeechSynthesisUtterance(appState.currentQuestion.text);
+        utterance.lang = 'ta-IN';
+        utterance.rate = 0.9;
+        utterance.pitch = 1;
+        
+        utterance.onerror = function(event) {
+          if (event.error === 'language-unavailable') {
+            utterance.lang = 'en-US';
+            window.speechSynthesis.speak(utterance);
+            showToast('Tamil voice not available, using English', 'warning');
+          }
+        };
+        
+        window.speechSynthesis.speak(utterance);
+        showToast('Reading question aloud...', 'info');
+      } else {
+        showToast('Text-to-speech not supported in this browser', 'error');
+      }
+    }
+    
+    // Show answer
+    function showAnswer() {
+      if (appState.timerInterval) {
+        clearInterval(appState.timerInterval);
+        appState.timerInterval = null;
+      }
+      
+      const currentTeam = appState.teams[appState.currentTeamIndex];
+      
+      document.getElementById('answer-team-display').textContent = `${currentTeam.name} - Question ${appState.currentQuestionNumber}`;
+      document.getElementById('answer-text').textContent = appState.currentQuestion.answer;
+      document.getElementById('reference-text').textContent = appState.currentQuestion.reference || 'No reference provided.';
+      document.getElementById('correct-btn-text').textContent = `✓ Correct +${appState.currentRound}`;
+      
+      showPage('page-answer');
+    }
+    
+    // Mark correct
+    function markCorrect() {
+  const currentTeam = appState.teams[appState.currentTeamIndex];
+  currentTeam.todayScore += appState.currentRound;
+  currentTeam.totalScore += appState.currentRound;
+
+  if (!appState.usedQuestions[appState.currentRound].includes(appState.currentQuestionNumber)) {
+    appState.usedQuestions[appState.currentRound].push(appState.currentQuestionNumber);
+  }
+
+  saveToStorage();
+  updateScoreboard();
+  showToast(`+${appState.currentRound} points to ${currentTeam.name}!`, 'success');
+
+  document.getElementById("correct-btn-text").textContent = "✓ Marked Correct";
+}
+
+    
+    // Mark wrong
+    function markWrong() {
+  if (!appState.usedQuestions[appState.currentRound].includes(appState.currentQuestionNumber)) {
+    appState.usedQuestions[appState.currentRound].push(appState.currentQuestionNumber);
+  }
+
+  saveToStorage();
+  showToast('Marked as wrong - No points', 'error');
+
+  document.getElementById("correct-btn-text").textContent = "✓ Marked";
+}
+
+    
+    // Next team
+    function nextTeam() {
+  appState.currentTeamIndex = (appState.currentTeamIndex + 1) % appState.teams.length;
+  saveToStorage();
+
+  updateCurrentTeamDisplay();
+  generateQuestionGrid();   // reload grid with disabled questions
+  showPage('page-question-grid');
+}
+
+
+    
+    function moveToNextTeam() {
+      appState.currentTeamIndex = (appState.currentTeamIndex + 1) % appState.teams.length;
+      saveToStorage();
+    }
+    
+    // Admin functions
+    function editTeamNames() {
+      showPage('page-team-setup');
+      toggleAdminPanel();
+    }
+    
+    function dailyReset() {
+      const confirmDiv = createConfirmation(
+        'Reset Daily Scores?',
+        'This will reset today\'s scores for all teams and start a new day.',
+        () => {
+          appState.currentDay++;
+          appState.teams.forEach(team => {
+            team.todayScore = 0;
+            team.daysPlayed = appState.currentDay;
+          });
+          appState.usedQuestions = {};
+          appState.currentTeamIndex = 0;
+          
+          saveToStorage();
+          updateScoreboard();
+          showToast('Daily reset completed!', 'success');
+        }
+      );
+      document.body.appendChild(confirmDiv);
+    }
+    
+    function fullReset() {
+      const confirmDiv = createConfirmation(
+        'Full Reset?',
+        'This will delete all teams and scores. This action cannot be undone!',
+        () => {
+          appState = {
+            teams: [],
+            currentDay: 1,
+            currentTeamIndex: 0,
+            currentRound: null,
+            currentQuestionNumber: null,
+            currentQuestion: null,
+            usedQuestions: {},
+            timerInterval: null,
+            timeRemaining: 60,
+            tickAudio: appState.tickAudio,
+            questions: appState.questions
+          };
+          
+          saveToStorage();
+          generateTeamInputs();
+          updateScoreboard();
+          showPage('page-team-setup');
+          toggleAdminPanel();
+          showToast('Full reset completed!', 'success');
+        }
+      );
+      document.body.appendChild(confirmDiv);
+    }
+    
+    function exportCSV() {
+      let csv = 'Rank,Team Name,Today Score,Total Score\n';
+      
+      const sortedTeams = [...appState.teams].sort((a, b) => b.totalScore - a.totalScore);
+      sortedTeams.forEach((team, index) => {
+        csv += `${index + 1},"${team.name}",${team.todayScore},${team.totalScore}\n`;
+      });
+      
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `tamil-quiz-scores-day${appState.currentDay}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+      
+      showToast('CSV exported successfully!', 'success');
+    }
+    
+    async function addQuestion(event) {
+  event.preventDefault();
+
+  const data = {
+    points: document.getElementById("points").value,
+    number: document.getElementById("question-number").value,
+    text: document.getElementById("tamil-question").value,
+    options: [
+      document.getElementById("option-a").value,
+      document.getElementById("option-b").value,
+      document.getElementById("option-c").value,
+      document.getElementById("option-d").value
+    ].filter(v => v.trim() !== ""),
+    answer: document.getElementById("correct-answer").value,
+    reference: document.getElementById("reference").value
+  };
+
+  const res = await fetch("/api/question", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+
+  if (res.ok) {
+    showToast("Question Saved Successfully!", "success");
+    document.getElementById("add-question-form").reset();
+    toggleAdminPanel();
+  } else {
+    showToast("Failed to save question", "error");
+  }
+}
+
+
+    
+    // Storage functions
+    function saveToStorage() {
+      try {
+        localStorage.setItem('tamilQuizState', JSON.stringify({
+          teams: appState.teams,
+          currentDay: appState.currentDay,
+          currentTeamIndex: appState.currentTeamIndex,
+          usedQuestions: appState.usedQuestions,
+          questions: appState.questions
+        }));
+      } catch (e) {
+        console.error('Storage error:', e);
+      }
+    }
+    
+    function loadFromStorage() {
+      try {
+        const saved = localStorage.getItem('tamilQuizState');
+        if (saved) {
+          const data = JSON.parse(saved);
+          appState.teams = data.teams || [];
+          appState.currentDay = data.currentDay || 1;
+          appState.currentTeamIndex = data.currentTeamIndex || 0;
+          appState.usedQuestions = data.usedQuestions || {};
+          
+          // Load nested question structure
+          if (data.questions) {
+            // Check if it's the new nested structure or old array
+            if (typeof data.questions === 'object' && !Array.isArray(data.questions)) {
+              appState.questions = data.questions;
+            } else {
+              // Initialize new structure
+              appState.questions = {
+                "5": {},
+                "10": {},
+                "20": {},
+                "30": {}
+              };
+            }
+          } else {
+            appState.questions = {
+              "5": {},
+              "10": {},
+              "20": {},
+              "30": {}
+            };
+          }
+        }
+      } catch (e) {
+        console.error('Storage load error:', e);
+      }
+    }
+    
+    // UI Helper functions
+    function showPage(pageId) {
+  document.querySelectorAll(".page").forEach(p => {
+    p.style.display = "none";
+    p.classList.remove("active");
+  });
+
+  const page = document.getElementById(pageId);
+  if (!page) return;
+
+  page.style.display = "block";
+  setTimeout(() => page.classList.add("active"), 10);
+}
+
+    
+    function toggleAdminPanel() {
+      const panel = document.getElementById('admin-panel');
+      if (panel.classList.contains('hidden')) {
+        panel.classList.remove('hidden');
+        panel.classList.add('flex');
+      } else {
+        panel.classList.add('hidden');
+        panel.classList.remove('flex');
+      }
+    }
+    
+    function showToast(message, type = 'info') {
+      const colors = {
+        success: 'bg-white text-black border-2 border-black',
+        error: 'bg-black text-white border-2 border-white',
+        warning: 'bg-white text-black border-2 border-black',
+        info: 'bg-white text-black border-2 border-black'
+      };
+      
+      const toast = document.createElement('div');
+      toast.className = `toast ${colors[type]} px-6 py-4 font-bold flex items-center gap-3 rounded-xl shadow-2xl`;
+      toast.innerHTML = `
+        <span>${message}</span>
+      `;
+      
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.animation = 'toastSlideOut 0.3s ease forwards';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+    
+    function createConfirmation(title, message, onConfirm) {
+      const div = document.createElement('div');
+      div.className = 'fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4';
+      div.innerHTML = `
+        <div class="glass-card-white rounded-2xl p-8 max-w-md w-full">
+          <h3 class="text-2xl font-black mb-4 uppercase text-black">${title}</h3>
+          <p class="mb-6 font-bold text-gray-700">${message}</p>
+          <div class="flex gap-4">
+            <button onclick="this.closest('.fixed').remove()" class="flex-1 modern-btn px-6 py-3 rounded-xl uppercase font-bold">
+              Cancel
+            </button>
+            <button class="flex-1 modern-btn-inverse px-6 py-3 rounded-xl font-black uppercase confirm-btn">
+              Confirm
+            </button>
+          </div>
+        </div>
+      `;
+      
+      div.querySelector('.confirm-btn').onclick = () => {
+        onConfirm();
+        div.remove();
+      };
+      
+      return div;
+    }
+    
+    // Element SDK Integration
+    async function onConfigChange(newConfig) {
+      config = { ...config, ...newConfig };
+      
+      const mainTitleEl = document.getElementById('main-title');
+      const subtitleEl = document.getElementById('subtitle');
+      const scoreboardTitleEl = document.getElementById('scoreboard-title');
+      
+      if (mainTitleEl) {
+        mainTitleEl.textContent = config.main_title || defaultConfig.main_title;
+      }
+      if (subtitleEl) {
+        subtitleEl.textContent = config.subtitle || defaultConfig.subtitle;
+      }
+      if (scoreboardTitleEl) {
+        scoreboardTitleEl.textContent = config.main_title || defaultConfig.main_title;
+      }
+    }
+    
+    function mapToCapabilities(cfg) {
+      return {
+        recolorables: [],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+    
+    function mapToEditPanelValues(cfg) {
+      return new Map([
+        ['main_title', cfg.main_title || defaultConfig.main_title],
+        ['subtitle', cfg.subtitle || defaultConfig.subtitle]
+      ]);
+    }
+    
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+    
+    // Close admin panel on backdrop click
+    document.getElementById('admin-panel').addEventListener('click', function(e) {
+      if (e.target === this) {
+        toggleAdminPanel();
+      }
+    });
+    
+    // Initialize on load
+    initApp();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bd35b0162b2c795',t:'MTc2ODI5MTE4MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
