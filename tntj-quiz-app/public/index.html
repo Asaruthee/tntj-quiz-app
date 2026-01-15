@@ -556,7 +556,7 @@
          </div>
          <div><label for="question-number" class="block text-sm font-bold mb-2 text-black">QUESTION NUMBER (1-15)</label> <select id="question-number" class="w-full px-4 py-3 rounded-xl font-bold" required> <option value="1">Question 1</option> <option value="2">Question 2</option> <option value="3">Question 3</option> <option value="4">Question 4</option> <option value="5">Question 5</option> <option value="6">Question 6</option> <option value="7">Question 7</option> <option value="8">Question 8</option> <option value="9">Question 9</option> <option value="10">Question 10</option> <option value="11">Question 11</option> <option value="12">Question 12</option> <option value="13">Question 13</option> <option value="14">Question 14</option> <option value="15">Question 15</option> </select>
          </div>
-         <div><label for="reference" class="block text-sm font-bold mb-2 text-black">REFERENCE / குறிப்பு</label> <textarea id="reference" rows="2" placeholder="Enter reference..." class="w-full px-4 py-3 font-tamil rounded-xl"></textarea>
+         <div><label for="reference" class="block text-sm font-bold mb-2 text-black">ஆதாரம்:</label> <textarea id="reference" rows="2" placeholder="Enter reference..." class="w-full px-4 py-3 font-tamil rounded-xl"></textarea>
          </div><button type="submit" class="modern-btn-inverse w-full py-4 rounded-xl text-lg font-black uppercase"> ➕ Add Question </button>
         </div>
        </form>
@@ -566,7 +566,7 @@
    </div>
   </div>
   <div class="fixed bottom-2 left-0 w-full text-center text-gray-400 text-sm font-bold opacity-70 dev-credit">
-  Developed by Asar
+  Developed By Asar
 </div>
 
   <script>
@@ -627,9 +627,9 @@
   appState.tickAudio = createTickSound();
 
   if (hasTeamsSaved()) {
-    showPage("page-scoreboard");   // 👈 skip team setup
+    showPage("page-scoreboard");   
   } else {
-    showPage("page-team-setup");   // 👈 only first time
+    showPage("page-team-setup");   
   }
 }
 
@@ -1266,6 +1266,7 @@ function hasTeamsSaved() {
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bd35b0162b2c795',t:'MTc2ODI5MTE4MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 
 </html>
+
 
 
 
