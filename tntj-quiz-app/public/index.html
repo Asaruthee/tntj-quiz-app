@@ -163,9 +163,10 @@
 }
 
     
-   .page.active { 
+.page.active {
   display: block;
-  z-index: 100;
+  opacity: 1;
+  transform: scale(1);
 }
 
     
@@ -322,13 +323,6 @@
   pointer-events: none;
   letter-spacing: 1px;
 }
- 
- function openRules(){
-  showPage("page-rules");
-}
-
-
-
 
 
 </style>
@@ -667,18 +661,15 @@
     }
     
     // Initialize Application
-    function initApp() {
+   function initApp() {
   loadFromStorage();
   generateTeamInputs();
   updateScoreboard();
   appState.tickAudio = createTickSound();
 
-  if (hasTeamsSaved()) {
-    showPage("page-scoreboard");   
-  } else {
-    showPage("page-team-setup");   
-  }
+  showPage("page-team-setup");   // ALWAYS start with team setup
 }
+
 
     
     // Generate team inputs
@@ -1183,20 +1174,17 @@ function hasTeamsSaved() {
     }
     
     // UI Helper functions
-   function showPage(pageId) {
+  function showPage(pageId) {
   document.querySelectorAll(".page").forEach(p => {
     p.classList.remove("active");
-    p.style.display = "none";
   });
 
   const page = document.getElementById(pageId);
   if (!page) return;
 
-  page.style.display = "block";
-  requestAnimationFrame(() => {
-    page.classList.add("active");
-  });
+  page.classList.add("active");
 }
+
     
     function toggleAdminPanel() {
       const panel = document.getElementById('admin-panel');
@@ -1314,6 +1302,7 @@ function hasTeamsSaved() {
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bd35b0162b2c795',t:'MTc2ODI5MTE4MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 
 </html>
+
 
 
 
