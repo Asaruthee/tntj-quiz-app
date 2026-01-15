@@ -312,10 +312,9 @@
   letter-spacing: 0.32em;
   word-spacing: 0.6em;
   text-transform: uppercase;
-  margin-top: 50px;
+  margin-top: 50px;   /* ⬅⬅ subtitle goes down */
   display: block;
-}
-
+ 
 .dev-credit {
   pointer-events: none;
   letter-spacing: 1px;
@@ -350,24 +349,30 @@
      </div>
     </div><!-- Page 2: Scoreboard -->
     <div id="page-scoreboard" class="page max-w-7xl mx-auto">
-     
      <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
       <div>
        <h1 id="scoreboard-title" class="text-3xl md:text-5xl font-black glow-text">Ramadan Quiz Program - 2026</h1>
        <p class="text-lg font-bold mt-1 text-gray-300">SCOREBOARD</p>
       </div>
-      <div id="page-rules-view" class="page max-w-5xl mx-auto">
-  <div class="text-center mb-8">
-    <h1 class="text-4xl font-black glow-text">விதிமுறைகள்..</h1>
-  </div>
+      <!-- Page: Rules -->
+<div id="page-rules" class="page max-w-4xl mx-auto">
+  <div class="glass-card-white rounded-2xl p-8 text-black">
+    <h1 class="text-3xl md:text-4xl font-black mb-6 text-center">📜 Quiz Rules</h1>
 
-  <div class="glass-card-white rounded-2xl p-6 md:p-10 text-black font-tamil">
-    <pre id="rules-display" class="whitespace-pre-wrap font-bold text-lg leading-relaxed"></pre>
-  </div>
+    <ul class="space-y-3 text-lg font-bold">
+      <li>✔ Each team will get one question per turn.</li>
+      <li>✔ Correct answer → Full points.</li>
+      <li>✘ Wrong answer → No points.</li>
+      <li>⏱ Time limit: 60 seconds.</li>
+      <li>🔄 After answering → Click Next Team.</li>
+      <li>📅 Daily Reset clears only Today score.</li>
+    </ul>
 
-  <div class="text-center mt-6">
-    <button onclick="showPage('page-scoreboard')" 
-      class="modern-btn px-8 py-3 rounded-xl uppercase">← Back</button>
+    <div class="mt-8 flex justify-center">
+      <button onclick="showPage('page-scoreboard')" class="modern-btn px-8 py-4 rounded-xl text-xl">
+        ← Back to Scoreboard
+      </button>
+    </div>
   </div>
 </div>
 
@@ -428,11 +433,7 @@
        </table>
       </div>
      </div>
-     <div class="flex justify-center gap-4"><button onclick="showRulesPage()" class="modern-btn px-6 py-3 rounded-xl uppercase">
-📜 View Rules
-</button>
-
-<button onclick="showPage('page-team-setup')" class="modern-btn px-6 py-3 rounded-xl uppercase"> ← Back to Setup </button> <button onclick="showPage('page-round-selection')" class="modern-btn-inverse px-8 py-4 rounded-xl text-xl uppercase"> ▶ சுற்று தொடங்கு / Start Round </button>
+     <div class="flex justify-center gap-4"><button onclick="showPage('page-team-setup')" class="modern-btn px-6 py-3 rounded-xl uppercase"> ← Back to Setup </button> <button onclick="showPage('page-round-selection')" class="modern-btn-inverse px-8 py-4 rounded-xl text-xl uppercase"> ▶ சுற்று தொடங்கு / Start Round </button>
      </div>
     </div><!-- Page 3: Round Selection -->
     <div id="page-round-selection" class="page max-w-5xl mx-auto">
@@ -532,7 +533,17 @@
      <div class="flex flex-wrap justify-center gap-4"><button onclick="markCorrect()" class="modern-btn px-8 py-4 rounded-xl text-xl font-black uppercase"> <span id="correct-btn-text">✓ Correct +10</span> </button> <button onclick="markWrong()" class="modern-btn px-8 py-4 rounded-xl text-xl font-black uppercase"> ✗ Wrong 0 </button> <button onclick="nextTeam()" class="modern-btn-inverse px-8 py-4 rounded-xl text-xl font-black uppercase"> → Next Team </button>
      </div>
     </div>
-   </div><!-- Floating Admin Button --> <button onclick="toggleAdminPanel()" class="admin-btn fixed bottom-6 right-6 w-14 h-14 bg-white text-black rounded-full glass-card-white flex items-center justify-center z-50"> <span class="text-2xl">⚙</span> </button> <!-- Admin Panel Modal -->
+   </div><!-- Floating Admin Button --> <div class="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
+  <button onclick="showPage('page-rules')" class="admin-btn w-14 h-14 bg-white text-black rounded-full glass-card-white flex items-center justify-center">
+    📜
+  </button>
+
+  <button onclick="toggleAdminPanel()" class="admin-btn w-14 h-14 bg-white text-black rounded-full glass-card-white flex items-center justify-center">
+    ⚙
+  </button>
+</div>
+
+
    <div id="admin-panel" class="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 hidden items-center justify-center p-4 overflow-auto">
     <div class="glass-card-white rounded-2xl max-w-4xl w-full max-h-[90%] overflow-y-auto">
      <div class="p-6 md:p-8">
@@ -552,29 +563,6 @@
         <div class="text-3xl mb-2">
          📊
         </div><span class="text-sm font-bold text-black">Export CSV</span> </button>
-     
-
-    <textarea id="rules-text" rows="14" class="w-full p-4 font-tamil rounded-xl text-black text-lg"></textarea>
-
-    <button onclick="saveRules()" class="modern-btn-inverse w-full mt-6 py-3 rounded-xl text-lg font-black uppercase">
-      💾 Save Rules
-    </button>
-  </div>
-</div>
-<div id="page-rules-view" class="page max-w-5xl mx-auto">
-  <div class="text-center mb-8">
-    <h1 class="text-4xl font-black glow-text">விதிமுறைகள்..</h1>
-  </div>
-
-  <div class="glass-card-white rounded-2xl p-6 md:p-10 text-black font-tamil">
-    <pre id="rules-display" class="whitespace-pre-wrap font-bold text-lg leading-relaxed"></pre>
-  </div>
-
-  <div class="text-center mt-6">
-    <button onclick="showPage('page-scoreboard')" class="modern-btn px-8 py-3 rounded-xl uppercase">← Back</button>
-  </div>
-</div>
-
       </div><!-- Add Question Form -->
       <div class="glass-card-white rounded-xl p-6 bg-gray-50 border border-gray-200">
        <h3 class="text-xl font-black mb-6 uppercase text-black">➕ Add New Question</h3>
@@ -1123,30 +1111,6 @@ function hasTeamsSaved() {
     showToast("Failed to save question", "error");
   }
 }
-   let rulesData = "";
-let rulesData = "";
-
-function loadRules() {
-  rulesData = localStorage.getItem("quizRules") || `
-இதில் 4 சுற்றுகள் அடங்கிருக்கும்  
-ஒரு கேள்விக்கு 60 வினாடிகள் மட்டுமே வழங்கப்படும்  
-குழுத் தலைவர் மட்டும் தான் பதில் சொல்ல வேண்டும்  
-நிகழ்ச்சி நடத்துபவர் முடிவே இறுதி முடிவு  
-மற்ற குழுவினரிடம் பதில் கேட்கக் கூடாது  
-இறைவனுக்கு பயந்து பதில் சொல்ல வேண்டும்  
-குழு பிரித்த பின் சேர்க்க முடியாது  
-2 நாட்கள் வராதவர்கள் குழுவில் இருந்து நீக்கப்படுவர்  
-விதிமுறைகள் மாற்றப்படலாம்  
-நிர்வாகத்திற்கு முழு ஒத்துழைப்பு தருமாறு கேட்டுக்கொள்கிறோம்  
-
-இப்படிக்கு,  
-நிர்வாகம்`;
-}
-
-function showRulesPage(){
-  document.getElementById("rules-display").textContent = rulesData;
-  showPage("page-rules-view");
-}
 
 
     
@@ -1330,19 +1294,7 @@ function showRulesPage(){
     
     // Initialize on load
     initApp();
-   loadRules();
   </script>
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bd35b0162b2c795',t:'MTc2ODI5MTE4MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
