@@ -1,4 +1,3 @@
-<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
 <!doctype html>
 <html lang="ta" class="h-full">
  <head>
@@ -313,9 +312,10 @@
   letter-spacing: 0.32em;
   word-spacing: 0.6em;
   text-transform: uppercase;
-  margin-top: 50px;   /* ⬅⬅ subtitle goes down */
+  margin-top: 50px;
   display: block;
- 
+}
+
 .dev-credit {
   pointer-events: none;
   letter-spacing: 1px;
@@ -350,11 +350,27 @@
      </div>
     </div><!-- Page 2: Scoreboard -->
     <div id="page-scoreboard" class="page max-w-7xl mx-auto">
+     
      <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
       <div>
        <h1 id="scoreboard-title" class="text-3xl md:text-5xl font-black glow-text">Ramadan Quiz Program - 2026</h1>
        <p class="text-lg font-bold mt-1 text-gray-300">SCOREBOARD</p>
       </div>
+      <div id="page-rules-view" class="page max-w-5xl mx-auto">
+  <div class="text-center mb-8">
+    <h1 class="text-4xl font-black glow-text">விதிமுறைகள்..</h1>
+  </div>
+
+  <div class="glass-card-white rounded-2xl p-6 md:p-10 text-black font-tamil">
+    <pre id="rules-display" class="whitespace-pre-wrap font-bold text-lg leading-relaxed"></pre>
+  </div>
+
+  <div class="text-center mt-6">
+    <button onclick="showPage('page-scoreboard')" 
+      class="modern-btn px-8 py-3 rounded-xl uppercase">← Back</button>
+  </div>
+</div>
+
       <div class="flex items-center gap-4">
        <div id="day-badge" class="glass-card px-6 py-3 rounded-xl font-black text-xl">
         DAY 1
@@ -413,8 +429,9 @@
       </div>
      </div>
      <div class="flex justify-center gap-4"><button onclick="showRulesPage()" class="modern-btn px-6 py-3 rounded-xl uppercase">
- 📜 View Rules
+📜 View Rules
 </button>
+
 <button onclick="showPage('page-team-setup')" class="modern-btn px-6 py-3 rounded-xl uppercase"> ← Back to Setup </button> <button onclick="showPage('page-round-selection')" class="modern-btn-inverse px-8 py-4 rounded-xl text-xl uppercase"> ▶ சுற்று தொடங்கு / Start Round </button>
      </div>
     </div><!-- Page 3: Round Selection -->
@@ -535,16 +552,7 @@
         <div class="text-3xl mb-2">
          📊
         </div><span class="text-sm font-bold text-black">Export CSV</span> </button>
-       <button onclick="openRulesEditor()" class="glass-card-white rounded-xl p-4 text-center hover:scale-105 transition-transform border border-gray-200">
-  <div class="text-3xl mb-2">📜</div>
-  <span class="text-sm font-bold text-black">Edit Rules</span>
-</button>
-<div id="rules-editor" class="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-auto">
-  <div class="glass-card-white rounded-2xl max-w-3xl w-full p-6 md:p-8">
-    <div class="flex justify-between items-center mb-6">
-      <h2 class="text-2xl font-black text-black">📜 விதிமுறைகள் Editor</h2>
-      <button onclick="closeRulesEditor()" class="w-10 h-10 bg-black text-white rounded-full font-black">✕</button>
-    </div>
+     
 
     <textarea id="rules-text" rows="14" class="w-full p-4 font-tamil rounded-xl text-black text-lg"></textarea>
 
@@ -1116,22 +1124,7 @@ function hasTeamsSaved() {
   }
 }
    let rulesData = "";
-
-function openRulesEditor() {
-  document.getElementById("rules-editor").classList.remove("hidden");
-  document.getElementById("rules-text").value = rulesData;
-}
-
-function closeRulesEditor() {
-  document.getElementById("rules-editor").classList.add("hidden");
-}
-
-function saveRules() {
-  rulesData = document.getElementById("rules-text").value;
-  localStorage.setItem("quizRules", rulesData);
-  showToast("Rules saved successfully!", "success");
-  closeRulesEditor();
-}
+let rulesData = "";
 
 function loadRules() {
   rulesData = localStorage.getItem("quizRules") || `
@@ -1154,7 +1147,6 @@ function showRulesPage(){
   document.getElementById("rules-display").textContent = rulesData;
   showPage("page-rules-view");
 }
-
 
 
     
